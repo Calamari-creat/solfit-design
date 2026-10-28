@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolFit — Moda Praia & Academia | Design Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — copie estes valores no editor de tema
+   (Nuvemshop > Layout > Personalizar > Cores e Fontes)
+   ============================================================ */
+:root{
+  /* Cores */
+  --color-primary:        #059669; /* Verde principal — CTA secundário, detalhes */
+  --color-primary-strong: #047857; /* Verde escuro — hovers, texto sobre claro */
+  --color-secondary:      #10B981; /* Verde claro — badges, detalhes */
+  --color-accent:         #EA580C; /* Laranja urgência — CTA principal, ofertas */
+  --color-background:     #ECFDF5; /* Fundo geral (areia/verde Suave) */
+  --color-surface:        #FFFFFF; /* Fundo dos cards */
+  --color-foreground:     #06342B; /* Texto principal */
+  --color-muted-foreground:#47565F; /* Texto secundário */
+  --color-border:         #A7F3D0; /* Bordas suaves */
+  --color-muted:          #E7F4EC; /* Fundo seções alternadas */
+  --color-deep-green:     #064E3B; /* Verde profundo — footer/blocos */
+  --color-destructive:    #DC2626; /* Promoções/erros */
+  --color-ring:           #059669; /* Foco de teclado */
+
+  /* Tipografia */
+  --font-display: 'Barlow Condensed', sans-serif; /* Títulos: condensada esportiva */
+  --font-body:    'Barlow', sans-serif;           /* Corpo: legível */
+
+  /* Escala de espaçamento (ritmo de 8px) */
+  --space-1: 8px;  --space-2: 16px; --space-3: 24px;
+  --space-4: 32px; --space-5: 48px; --space-6: 64px; --space-7: 96px;
+
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 24px; --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(6,58,43,.06), 0 8px 24px rgba(6,58,43,.08);
+  --shadow-card-hover: 0 2px 4px rgba(6,58,43,.08), 0 16px 40px rgba(6,58,43,.14);
+  --transition: 220ms ease;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--color-background);
+  color:var(--color-foreground);
+  line-height:1.55;
+  font-size:16px;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+:focus-visible{outline:3px solid var(--color-ring);outline-offset:2px;border-radius:4px}
+
+.container{max-width:1240px;margin:0 auto;padding:0 var(--space-3)}
+
+h1,h2,h3,.display{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.02em;line-height:1.05}
+
+/* Eyebrow / kicker */
+.kicker{font-family:var(--font-display);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:14px;color:var(--color-primary-strong)}
+
+/* ============ BARRA DE ANÚNCIOS ============ */
+.announcement{
+  background:var(--color-deep-green);
+  color:#D1FAE5;font-size:13px;font-weight:500;
+  text-align:center;padding:8px var(--space-2);
+  letter-spacing:.04em;
+}
+.announcement strong{color:#fff}
+
+/* ============ HEADER ============ */
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--color-border);
+}
+.header-inner{
+  display:flex;align-items:center;gap:var(--space-4);
+  padding-top:var(--space-2);padding-bottom:var(--space-2);
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--color-accent),var(--color-primary));
+  display:grid;place-items:center;color:#fff;font-family:var(--font-display);
+  font-weight:800;font-size:18px;
+}
+.logo-name{font-family:var(--font-display);font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.03em}
+.logo-name span{color:var(--color-primary-strong)}
+
+.nav{display:flex;gap:var(--space-3);margin:0 auto}
+.nav a{
+  font-weight:600;font-size:15px;padding:8px 4px;position:relative;
+  transition:color var(--transition);
+}
+.nav a:hover{color:var(--color-primary-strong)}
+.nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:var(--color-accent);border-radius:2px;
+  transform:scaleX(0);transform-origin:left;transition:transform var(--transition);
+}
+.nav a:hover::after{transform:scaleX(1)}
+.nav .nav-pill{
+  background:var(--color-muted);padding:8px 14px;border-radius:var(--radius-pill);
+  color:var(--color-primary-strong);
+}
+.nav .nav-pill:hover{background:#D3EEE0}
+.nav .nav-pill::after{display:none}
+
+.header-actions{display:flex;gap:var(--space-1);align-items:center}
+.icon-btn{
+  display:grid;place-items:center;width:44px;height:44px;border-radius:50%;
+  color:var(--color-foreground);transition:background var(--transition),color var(--transition);
+  position:relative;
+}
+.icon-btn:hover{background:var(--color-muted);color:var(--color-primary-strong)}
+.cart-badge{
+  position:absolute;top:4px;right:2px;background:var(--color-accent);color:#fff;
+  font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;
+  display:grid;place-items:center;border:2px solid #fff;
+}
+.search-inline{display:flex;align-items:center;gap:8px;background:var(--color-muted);border-radius:var(--radius-pill);padding:8px 16px;width:260px}
+.search-inline input{border:none;background:transparent;font-family:inherit;font-size:14px;width:100%;outline:none}
+
+/* ============ HERO ============ */
+.hero{padding:var(--space-6) 0 var(--space-6)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--space-5);align-items:center}
+.hero-copy .kicker{color:var(--color-accent)}
+.hero h1{font-size:clamp(44px,6vw,76px);font-weight:800;margin:var(--space-2) 0}
+.hero h1 .sand{color:var(--color-primary-strong)}
+.hero h1 .fire{color:var(--color-accent)}
+.hero p{color:var(--color-muted-foreground);font-size:18px;max-width:46ch;margin-bottom:var(--space-4)}
+.hero-ctas{display:flex;gap:var(--space-2);flex-wrap:wrap}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-display);font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;font-size:17px;
+  padding:14px 28px;border-radius:var(--radius-pill);
+  transition:transform var(--transition),box-shadow var(--transition),background var(--transition);
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--color-accent);color:#fff;box-shadow:0 8px 20px rgba(234,88,12,.30)}
+.btn-primary:hover{background:#C2410C;transform:translateY(-2px)}
+.btn-secondary{background:var(--color-deep-green);color:#fff}
+.btn-secondary:hover{background:var(--color-primary-strong);transform:translateY(-2px)}
+.btn-outline{border:2px solid var(--color-deep-green);color:var(--color-deep-green)}
+.btn-outline:hover{background:var(--color-deep-green);color:#fff}
+
+.hero-stats{display:flex;gap:var(--space-4);margin-top:var(--space-4)}
+.hero-stats div strong{font-family:var(--font-display);font-size:22px;font-weight:800;display:block}
+.hero-stats div span{font-size:13px;color:var(--color-muted-foreground)}
+
+/* Placeholder visual do hero (troque por foto real) */
+.hero-visual{
+  position:relative;border-radius:var(--radius-lg);overflow:hidden;
+  min-height:440px;
+  background:
+    radial-gradient(120% 90% at 80% 10%, rgba(16,185,129,.85), transparent 55%),
+    radial-gradient(110% 100% at 20% 100%, rgba(234,88,12,.55), transparent 60%),
+    linear-gradient(160deg,#0B8F6C, #06342B);
+  box-shadow:var(--shadow-card-hover);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.hero-visual::before{
+  content:"";position:absolute;inset:0;opacity:.35;
+  background:repeating-linear-gradient(115deg, transparent 0 38px, rgba(255,255,255,.06) 38px 40px);
+}
+.hero-visual-label{
+  position:relative;color:#fff;padding:var(--space-4);
+  display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-2);
+}
+.hero-visual-label .tag{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(6px);color:#fff;padding:8px 16px;border-radius:var(--radius-pill);
+  font-size:13px;font-weight:600;
+}
+.hero-badge-float{
+  position:absolute;top:24px;left:24px;
+  background:#fff;border-radius:var(--radius-md);padding:12px 18px;
+  box-shadow:var(--shadow-card);display:flex;gap:10px;align-items:center;
+  font-size:14px;font-weight:600;
+}
+.hero-badge-float .dot{width:10px;height:10px;border-radius:50%;background:var(--color-secondary);box-shadow:0 0 0 4px rgba(16,185,129,.2)}
+
+/* ============ BARRA DE BENEFÍCIOS ============ */
+.benefits{background:var(--color-surface);border-block:1px solid var(--color-border)}
+.benefits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);padding:var(--space-3) 0}
+.benefit{display:flex;align-items:center;gap:14px;padding:var(--space-2) var(--space-3);border-radius:var(--radius-md);transition:background var(--transition)}
+.benefit:hover{background:var(--color-muted)}
+.benefit .b-icon{
+  flex:none;width:46px;height:46px;border-radius:12px;background:var(--color-muted);
+  color:var(--color-primary-strong);display:grid;place-items:center;
+}
+.benefit strong{display:block;font-size:15px}
+.benefit span{font-size:13px;color:var(--color-muted-foreground)}
+
+/* ============ CATEGORIAS ============ */
+.section{padding:var(--space-6) 0}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-4)}
+.section-head h2{font-size:clamp(30px,4vw,44px);font-weight:800}
+.link-more{font-weight:700;color:var(--color-accent);display:inline-flex;align-items:center;gap:6px;transition:gap var(--transition)}
+.link-more:hover{gap:10px}
+
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
+.cat-card{
+  position:relative;border-radius:var(--radius-lg);overflow:hidden;min-height:340px;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:var(--space-4);
+  color:#fff;box-shadow:var(--shadow-card);
+  transition:transform var(--transition),box-shadow var(--transition);
+}
+.cat-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-card-hover)}
+.cat-praia{background:radial-gradient(130% 100% at 85% 0%, rgba(16,185,129,.8), transparent 55%),linear-gradient(150deg,#0EA5A4,#065F46)}
+.cat-academia{background:radial-gradient(130% 100% at 85% 0%, rgba(234,88,12,.7), transparent 55%),linear-gradient(160deg,#374151,#111827)}
+.cat-card::before{
+  content:"";position:absolute;inset:0;opacity:.25;
+  background:repeating-linear-gradient(-45deg, transparent 0 30px, rgba(255,255,255,.08) 30px 32px);
+}
+.cat-card .kicker{color:rgba(255,255,255,.85)}
+.cat-card h3{font-size:34px;font-weight:800;margin:6px 0 8px;position:relative}
+.cat-card p{position:relative;opacity:.9;max-width:40ch;margin-bottom:var(--space-3)}
+.cat-card .btn{position:relative;background:#fff;color:var(--color-foreground)}
+.cat-card .btn:hover{background:var(--color-accent);color:#fff}
+.cat-count{position:absolute;top:var(--space-3);right:var(--space-3);background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:var(--radius-pill);padding:6px 14px;font-size:13px;font-weight:600;backdrop-filter:blur(6px)}
+
+/* ============ PRODUTOS ============ */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--space-4)}
+.chip{
+  padding:9px 18px;border-radius:var(--radius-pill);font-weight:600;font-size:14px;
+  border:1.5px solid var(--color-border);color:var(--color-muted-foreground);
+  background:#fff;transition:all var(--transition);
+}
+.chip:hover{border-color:var(--color-primary-strong);color:var(--color-primary-strong)}
+.chip.is-active{background:var(--color-deep-green);border-color:var(--color-deep-green);color:#fff}
+
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3)}
+.product-card{
+  background:var(--color-surface);border-radius:var(--radius-md);overflow:hidden;
+  box-shadow:var(--shadow-card);display:flex;flex-direction:column;
+  transition:transform var(--transition),box-shadow var(--transition);
+}
+.product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-card-hover)}
+.product-media{position:relative;aspect-ratio:3/4;overflow:hidden}
+.product-media .ph{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.9);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.ph-1{background:linear-gradient(150deg,#34D399,#059669)}
+.ph-2{background:linear-gradient(150deg,#FB923C,#C2410C)}
+.ph-3{background:linear-gradient(160deg,#10B981,#064E3B)}
+.ph-4{background:linear-gradient(160deg,#64748B,#1E293B)}
+.ph-5{background:linear-gradient(150deg,#2DD4BF,#0F766E)}
+.ph-6{background:linear-gradient(160deg,#F87171,#991B1B)}
+.ph-7{background:linear-gradient(150deg,#FBBF24,#B45309)}
+.ph-8{background:linear-gradient(150deg,#A78BFA,#4C1D95)}
+
+.badges{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border-radius:var(--radius-pill);width:max-content}
+.badge-new{background:var(--color-secondary);color:#06342B}
+.badge-sale{background:var(--color-destructive);color:#fff}
+.badge-low{background:#fff;color:var(--color-accent);border:1px solid #FED7AA}
+
+.wish-btn{
+  position:absolute;top:12px;right:12px;z-index:2;
+  width:36px;height:36px;border-radius:50%;background:#fff;display:grid;place-items:center;
+  color:var(--color-muted-foreground);box-shadow:var(--shadow-card);
+  opacity:0;transform:translateY(-4px);transition:all var(--transition);
+}
+.product-card:hover .wish-btn,.wish-btn:focus-visible{opacity:1;transform:none}
+.wish-btn:hover{color:var(--color-destructive)}
+
+.add-cart{
+  position:absolute;left:12px;right:12px;bottom:12px;z-index:2;
+  background:rgba(6,52,43,.92);color:#fff;font-family:var(--font-display);
+  font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:14px;
+  padding:12px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:8px;
+  opacity:0;transform:translateY(8px);transition:all var(--transition);
+  backdrop-filter:blur(4px);
+}
+.product-card:hover .add-cart,.add-cart:focus-visible{opacity:1;transform:none}
+.add-cart:hover{background:var(--color-accent)}
+
+.product-info{padding:14px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.product-cat{font-size:12px;font-weight:600;color:var(--color-muted-foreground);text-transform:uppercase;letter-spacing:.08em}
+.product-name{font-weight:600;font-size:15px;flex:1}
+.product-price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price-old{color:var(--color-muted-foreground);text-decoration:line-through;font-size:14px}
+.price-now{font-family:var(--font-display);font-weight:800;font-size:22px}
+.price-installments{font-size:12px;color:var(--color-primary-strong);font-weight:500}
+.product-new-tag{display:inline-flex;align-items:baseline;gap:5px}
+.price-pix{font-size:12px;font-weight:700;color:var(--color-primary-strong);background:var(--color-muted);padding:3px 8px;border-radius:6px}
+
+/* ============ BANNER PROMO ============ */
+.promo{
+  border-radius:var(--radius-lg);overflow:hidden;position:relative;
+  background:linear-gradient(115deg,var(--color-accent) 0%, #F59E0B 100%);
+  color:#fff;padding:var(--space-5) var(--space-5);
+  display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:var(--space-4);
+}
+.promo::before{
+  content:"";position:absolute;inset:0;opacity:.18;
+  background:repeating-linear-gradient(90deg, transparent 0 46px, rgba(255,255,255,.35) 46px 48px);
+}
+.promo h2{font-size:clamp(30px,4vw,50px);font-weight:800;position:relative}
+.promo p{position:relative;opacity:.95;max-width:52ch;margin:10px 0 var(--space-3);font-size:17px}
+.promo .btn{position:relative;background:#fff;color:var(--color-accent);font-weight:800}
+.promo .btn:hover{transform:translateY(-2px)}
+.promo-code{
+  justify-self:center;position:relative;
+  background:rgba(255,255,255,.15);border:2px dashed rgba(255,255,255,.6);
+  border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);text-align:center;backdrop-filter:blur(4px);
+}
+.promo-code strong{font-family:var(--font-display);font-size:34px;letter-spacing:.12em;display:block}
+.promo-code span{font-size:13px;opacity:.9}
+
+/* ============ DEPOIMENTOS ============ */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3)}
+.review{
+  background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-4);
+  box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:12px;
+  transition:transform var(--transition);
+}
+.review:hover{transform:translateY(-4px)}
+.stars{color:#F59E0B;letter-spacing:2px}
+.review p{color:var(--color-muted-foreground);font-size:15px;flex:1}
+.reviewer{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-size:15px;font-family:var(--font-display)}
+.reviewer strong{display:block;font-size:14px}
+.reviewer span{font-size:12px;color:var(--color-muted-foreground)}
+.review-verified{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--color-primary-strong);font-weight:600}
+
+/* ============ NEWSLETTER ============ */
+.newsletter{
+  background:var(--color-deep-green);border-radius:var(--radius-lg);
+  padding:var(--space-5);color:#fff;display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:var(--space-4);
+}
+.newsletter h2{font-size:clamp(28px,3.5vw,40px);font-weight:800}
+.newsletter p{color:#A7F3D0;font-size:16px}
+.newsletter form{display:flex;gap:10px;flex-wrap:wrap}
+.newsletter input{
+  flex:1;min-width:220px;padding:14px 20px;border-radius:var(--radius-pill);
+  border:none;font-family:inherit;font-size:15px;outline:none;
+}
+.newsletter .btn{background:var(--color-accent)}
+.newsletter small{grid-column:1/-1;color:rgba(255,255,255,.55);font-size:12px}
+
+/* ============ FOOTER ============ */
+.footer{background:#04231B;color:#9CA3AF;margin-top:var(--space-6)}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:var(--space-5);padding:var(--space-5) 0 var(--space-4)}
+.footer h4{color:#fff;font-family:var(--font-display);text-transform:uppercase;font-size:16px;font-weight:700;margin-bottom:14px;letter-spacing:.08em}
+.footer ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.footer a:hover{color:#fff}
+.footer-brand p{font-size:14px;max-width:34ch;margin:14px 0}
+.social-row{display:flex;gap:10px}
+.social-row a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#D1FAE5;transition:all var(--transition)}
+.social-row a:hover{background:var(--color-accent);transform:translateY(-2px)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:var(--space-3) 0;display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);flex-wrap:wrap;font-size:13px}
+.pay-chips{display:flex;gap:6px;flex-wrap:wrap}
+.pay-chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.05em;color:#fff}
+
+/* WhatsApp flutuante */
+.wa-float{
+  position:fixed;right:20px;bottom:20px;z-index:60;
+  display:flex;align-items:center;gap:10px;
+  background:#25D366;color:#fff;font-weight:700;font-size:14px;
+  padding:12px 18px 12px 14px;border-radius:var(--radius-pill);
+  box-shadow:0 10px 30px rgba(37,211,102,.4);
+  transition:transform var(--transition);
+}
+.wa-float:hover{transform:translateY(-3px)}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width:1024px){
+  .products{grid-template-columns:repeat(3,1fr)}
+  .reviews{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media (max-width:768px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual{min-height:300px}
+  .cats{grid-template-columns:1fr}
+  .benefits-grid{grid-template-columns:1fr 1fr}
+  .products{grid-template-columns:1fr 1fr}
+  .reviews{grid-template-columns:1fr}
+  .promo{grid-template-columns:1fr}
+  .newsletter{grid-template-columns:1fr;padding:var(--space-4)}
+  .nav{display:none}
+  .search-inline{display:none}
+}
+@media (max-width:420px){
+  .products{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA DE ANÚNCIOS -->
+<div class="announcement">
+  🚚 Frete <strong>GRÁTIS</strong> acima de R$ 199 &nbsp;·&nbsp; Até <strong>12x sem juros</strong> &nbsp;·&nbsp; <strong>10% OFF</strong> no Pix
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="#" class="logo" aria-label="SolFit — página inicial">
+      <span class="logo-mark" aria-hidden="true">S</span>
+      <span class="logo-name">Sol<span>Fit</span></span>
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#categorias" class="nav-pill">
+        <span style="display:inline-flex;align-items:center;gap:7px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="17" cy="5" r="2.5"/><path d="M3 10c3-4 6-4 9 0s6 4 9 0M3 16c3-4 6-4 9 0s6 4 9 0"/></svg>
+          Praia
+        </span>
+      </a>
+      <a href="#categorias" class="nav-pill">
+        <span style="display:inline-flex;align-items:center;gap:7px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9v6M8 6v12M16 6v12M20 9v6M8 12h8"/></svg>
+          Academia
+        </span>
+      </a>
+      <a href="#produtos">Ofertas da Semana</a>
+      <a href="#produtos">Novidades</a>
+      <a href="#">Coleções</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="search-inline" role="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:#47565F"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <label for="busca" style="display:none">Buscar produtos</label>
+        <input id="busca" type="search" placeholder="Buscar biquíni, legging...">
+      </div>
+      <button class="icon-btn" aria-label="Minha conta">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-5.5 8-5.5s6.5 1.5 8 5.5"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Favoritos">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Carrinho — 2 itens">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+        <span class="cart-badge" aria-hidden="true">2</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="kicker">Verão 2026 ·  Coleção Nova</span>
+      <h1>Do mar ao <span class="fire">treino</span>,<br>vista sua <span class="sand">energia</span></h1>
+      <p>Moda praia e roupas de academia em um só lugar. Peças que acompanham você da areia ao supino — com conforto, estilo e envio para todo o Brasil.</p>
+      <div class="hero-ctas">
+        <a href="#categorias" class="btn btn-primary">Ver Coleção Praia
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+        <a href="#categorias" class="btn btn-secondary">Ver Coleção Academia
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>+40 mil</strong><span>clientes felizes</span></div>
+        <div><strong>4.9 ★</strong><span>avaliação média</span></div>
+        <div><strong>12x</strong><span>sem juros</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual" role="img" aria-label="Espaço reservado para foto editorial da coleção — substitua pela foto do produto principal">
+      <div class="hero-badge-float"><span class="dot" aria-hidden="true"></span> Frete grátis a partir de R$ 199</div>
+      <div class="hero-visual-label">
+        <span class="tag">📷 Troque por foto editorial (1800×1400px)</span>
+        <span class="tag">Até 40% OFF na 1ª compra</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BARRA DE BENEFÍCIOS -->
+<section class="benefits" aria-label="Vantagens da loja">
+  <div class="container benefits-grid">
+    <div class="benefit">
+      <span class="b-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="14" height="10" rx="1.5"/><path d="M15 9h4l3 3v4h-7"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="18.5" cy="17.5" r="1.8"/></svg>
+      </span>
+      <div><strong>Frete grátis</strong><span>Acima de R$ 199 para todo o Brasil</span></div>
+    </div>
+    <div class="benefit">
+      <span class="b-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+      </span>
+      <div><strong>Troca fácil</strong><span>30 dias para trocar sem dor de cabeça</span></div>
+    </div>
+    <div class="benefit">
+      <span class="b-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+      </span>
+      <div><strong>Até 12x sem juros</strong><span>Ou 10% off no Pix</span></div>
+    </div>
+    <div class="benefit">
+      <span class="b-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5.5v6c0 5 3.5 8.4 8 10.5 4.5-2.1 8-5.5 8-10.5v-6L12 2z"/><path d="m9 11.5 2 2 4-4.5"/></svg>
+      </span>
+      <div><strong>Compra segura</strong><span>Site protegido e dados criptografados</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIAS -->
+<section class="section" id="categorias">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Duas veias, uma loja</span>
+        <h2>Escolha seu estilo</h2>
+      </div>
+    </div>
+    <div class="cats">
+      <article class="cat-card cat-praia">
+        <span class="cat-count">120+ produtos</span>
+        <span class="kicker" style="position:relative">Sol, sal e estilo — coleção nova</span>
+        <h3>Moda Praia</h3>
+        <p>Saias, biquínis, camisas estampadas e bonés para brilhar na areia.</p>
+        <a href="#" class="btn">Comprar Praia
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+      </article>
+      <article class="cat-card cat-academia">
+        <span class="cat-count">98+ produtos</span>
+        <span class="kicker" style="position:relative">Ready to train — comfort técnico</span>
+        <h3>Academia</h3>
+        <p>Leggings, tops, dry-fits e shorts que não pesam na série final.</p>
+        <a href="#" class="btn">Comprar Academia
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section class="section" id="produtos" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Mais vendidos</span>
+        <h2>Destaques da semana</h2>
+      </div>
+      <a href="#" class="link-more">Ver tudo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filtrar por categoria">
+      <button class="chip is-active">Tudo</button>
+      <button class="chip">Praia</button>
+      <button class="chip">Academia</button>
+      <button class="chip">Novidades</button>
+      <button class="chip">Promoções</button>
+    </div>
+
+    <div class="products">
+      <!-- 1 -->
+      <article class="product-card">
+        <div class="product-media">
+          <div class="badges"><span class="badge badge-sale">-20%</span></div>
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-1">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Academia</span>
+          <span class="product-name">Legging Técnica High Waist</span>
+          <div class="product-price">
+            <span class="price-old">R$ 149,90</span>
+            <span class="price-pix">R$ 107,92 no Pix</span>
+          </div>
+          <span class="price-new-tag"><span class="price-now">R$ 119,90</span></span>
+          <span class="price-installments">ou 12x de R$ 9,99 sem juros</span>
+        </div>
+      </article>
+      <!-- 2 -->
+      <article class="product-card">
+        <div class="product-media">
+          <div class="badges"><span class="badge badge-new">Novidade</span></div>
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-2">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Praia</span>
+          <span class="product-name">Biquíni Cortininha Canela</span>
+          <div class="product-price"><span class="price-pix">R$ 116,92 no Pix</span></div>
+          <span class="price-new-tag"><span class="price-now">R$ 129,90</span></span>
+          <span class="price-installments">ou 12x de R$ 10,83 sem juros</span>
+        </div>
+      </article>
+      <!-- 3 -->
+      <article class="product-card">
+        <div class="product-media">
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-3">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Praia</span>
+          <span class="product-name">Camisa Linho Estampada</span>
+          <div class="product-price"><span class="price-pix">R$ 89,92 no Pix</span></div>
+          <span class="price-new-tag"><span class="price-now">R$ 99,90</span></span>
+          <span class="price-installments">ou 12x de R$ 8,33 sem juros</span>
+        </div>
+      </article>
+      <!-- 4 -->
+      <article class="product-card">
+        <div class="product-media">
+          <div class="badges"><span class="badge badge-low">Últimas peças</span></div>
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-4">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Academia</span>
+          <span class="product-name">Top Fitness Suporte Médio</span>
+          <div class="product-price"><span class="price-pix">R$ 62,92 no Pix</span></div>
+          <span class="price-new-tag"><span class="price-now">R$ 69,90</span></span>
+          <span class="price-installments">ou 12x de R$ 5,83 sem juros</span>
+        </div>
+      </article>
+      <!-- 5 -->
+      <article class="product-card">
+        <div class="product-media">
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-5">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Praia</span>
+          <span class="product-name">Bermuda Surf Quick Dry</span>
+          <div class="product-price"><span class="price-pix">R$ 125,92 no Pix</span></div>
+          <span class="price-new-tag"><span class="price-now">R$ 139,90</span></span>
+          <span class="price-installments">ou 12x de R$ 11,66 sem juros</span>
+        </div>
+      </article>
+      <!-- 6 -->
+      <article class="product-card">
+        <div class="product-media">
+          <div class="badges"><span class="badge badge-sale">-30%</span></div>
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-6">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Academia</span>
+          <span class="product-name">Camiseta Dry-Fit Training</span>
+          <div class="product-price">
+            <span class="price-old">R$ 99,90</span>
+            <span class="price-pix">R$ 48,92 no Pix</span>
+          </div>
+          <span class="price-new-tag"><span class="price-now">R$ 54,90</span></span>
+          <span class="price-installments">ou 12x de R$ 4,58 sem juros</span>
+        </div>
+      </article>
+      <!-- 7 -->
+      <article class="product-card">
+        <div class="product-media">
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-7">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Praia</span>
+          <span class="product-name">Vestido MIDI Estampado Verão</span>
+          <div class="product-price"><span class="price-pix">R$ 125,92 no Pix</span></div>
+          <span class="price-new-tag"><span class="price-now">R$ 139,90</span></span>
+          <span class="price-installments">ou 12x de R$ 11,66 sem juros</span>
+        </div>
+      </article>
+      <!-- 8 -->
+      <article class="product-card">
+        <div class="product-media">
+          <div class="badges"><span class="badge badge-new">Novidade</span></div>
+          <button class="wish-btn" aria-label="Adicionar aos favoritos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.8 4c1.7 0 3.2.8 4.2 2.2C13 4.8 14.5 4 16.2 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2z"/></svg>
+          </button>
+          <div class="ph ph-8">Foto do produto</div>
+          <button class="add-cart">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1.5 12h-15L6 7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Academia</span>
+          <span class="product-name">Short Compressão Runner Pro</span>
+          <div class="product-price"><span class="price-pix">R$ 71,92 no Pix</span></div>
+          <span class="price-new-tag"><span class="price-now">R$ 79,90</span></span>
+          <span class="price-installments">ou 12x de R$ 6,66 sem juros</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER PROMO -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="promo">
+      <div>
+        <h2>Corre: até 40% OFF na 1ª compra</h2>
+        <p>Cadastre no site, escolha seus looks preferidos e use o cupom no carrinho. Vale para as coleções Praia e Academia, por tempo limitado.</p>
+        <a href="#" class="btn">Aproveitar oferta
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="promo-code">
+        <strong>SOL40</strong>
+        <span>válido até <span style="color:#fff">28/12/2026</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DUVIDAS -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Quem comprou, aprovou</span>
+        <h2>Nota 4.9 de 5 ★</h2>
+      </div>
+    </div>
+    <div class="reviews">
+      <article class="review">
+        <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <p>A legging é maravilhosa, não fica transparente e é indispensável na academia. Chegou antes do prazo e a troca de tamanho foi sem estresse. <strong>Recomendadíssima!</strong></p>
+        <div class="reviewer">
+          <span class="avatar" style="background:var(--color-primary);font-size:16px" aria-hidden="true">C</span>
+          <div><strong>Camila R.</strong><span>São Paulo · Compra verificada</span></div>
+          <span class="review-verified">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+            Verificada
+          </span>
+        </div>
+      </article>
+      <article class="review">
+        <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <p>Peguei três peças da parte de praia para as férias e todos os looks ficaram incríveis. O tecido é de primeira e o suporte no WhatsApp respondeu em minutos.</p>
+        <div class="reviewer">
+          <span class="avatar" style="background:var(--color-accent)" aria-hidden="true">J</span>
+          <div><strong>Juliana M.</strong><span>Salvador · Compra verificada</span></div>
+          <span class="review-verified">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+            Verificada
+          </span>
+        </div>
+      </article>
+      <article class="review">
+        <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <p>Material premium e entrega rápida. Já é minha segunda compra e o cupom de volta sempre cai certinho no e-mail. Nota 10 no atendimento e no desconto do Pix!</p>
+        <div class="reviewer">
+          <span class="avatar" style="background:#0EA5A4" aria-hidden="true">R</span>
+          <div><strong>Rafael T.</strong><span>Rio de Janeiro · Compra verificada</span></div>
+          <span class="review-verified">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+            Verificada
+          </span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="newsletter">
+      <div>
+        <h2>Entre na lista e ganhe 10% OFF</h2>
+        <p>Novidades, cupons e acessos antecipados às coleções. Sem spam — promessas de aluno de academia.</p>
+      </div>
+      <form onsubmit="return false" aria-label="Cadastre-se para receber novidades">
+        <input type="email" placeholder="Seu melhor e-mail" aria-label="Seu e-mail" required>
+        <button type="submit" class="btn">Quero meu cupom</button>
+        <small>Ao cadastrar, você concorda com nossa Política de Privacidade. Dê a opção de sair em qualquer e-mail.</small>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo" aria-label="SolFit — voltar ao topo">
+          <span class="logo-mark" aria-hidden="true">S</span>
+          <span class="logo-name" style="color:#fff">Sol<span>Fit</span></span>
+        </a>
+        <p>Moda praia e roupas de academia com curadoria, conforto e preço justo. Da areia ao agachamento, estamos com você.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram da loja">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok da loja">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.7 2h-3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.5a6 6 0 1 0 5 5.9V8.3a7.2 7.2 0 0 0 4 1.2V6.4a4.4 4.4 0 0 1-4-4.4z"/></svg>
+          </a>
+          <a href="#" aria-label="WhatsApp da loja">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.3 13.9c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-5.9-5.2c-.7-1.2-.9-2.1-.7-2.7.1-.5.6-1.1.9-1.3.3-.2.6-.2.9-.1l.7 1.4c.1.3 0 .5-.1.7l-.5.6c-.1.2-.2.4 0 .7.5.9 1.6 2 2.6 2.6.3.2.5.1.7 0l.7-.7c.2-.2.4-.2.6-.1l1.4.7c.2.2.2.5.1.9z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4>Loja</h4>
+        <ul>
+          <li><a href="#">Moda Praia</a></li>
+          <li><a href="#">Academia</a></li>
+          <li><a href="#">Ofertas</a></li>
+          <li><a href="#">Novidades</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ajuda</h4>
+        <ul>
+          <li><a href="#">Central de Atendimento</a></li>
+          <li><a href="#">Trocas e Devoluções</a></li>
+          <li><a href="#">Prazos e Envios</a></li>
+          <li><a href="#">Tabela de Medidas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="#">Quem Somos</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+          <li><a href="#">Trabalhe Conosco</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>SolFit Comércio de Vestuário LTDA · CNPJ 00.000.000/0001-00</span>
+      <div class="pay-chips" aria-label="Formas de pagamento aceitas">
+        <span class="pay-chip">PIX</span><span class="pay-chip">BOLETO</span><span class="pay-chip">VISA</span><span class="pay-chip">MASTER</span><span class="pay-chip">ELO</span><span class="pay-chip">12x SEM JUROS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLUTUANTE -->
+<a href="#" class="wa-float" aria-label="Fale conosco no WhatsApp">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.3 13.9c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-5.9-5.2c-.7-1.2-.9-2.1-.7-2.7.1-.5.6-1.1.9-1.3.3-.2.6-.2.9-.1l.7 1.4c.1.3 0 .5-.1.7l-.5.6c-.1.2-.2.4 0 .7.5.9 1.6 2 2.6 2.6.3.2.5.1.7 0l.7-.7c.2-.2.4-.2.6-.1l1.4.7c.2.2.2.5.1.9z"/></svg>
+  Fale conosco
+</a>
+
+</body>
+</html>
